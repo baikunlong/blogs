@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登陆</title>
+</head>
+<body style="text-align: center">
+<img src="../../uploads/visitor.jpg" style="width: 100px;height:100px;border-radius: 50px" id="uhead"/><br>
+<form action="../users/login" method="post">
+    用户名：<input type="text" name="uname" onkeyup="getHead()" id="uname"><br><br>
+    密&nbsp;&nbsp;&nbsp;码：<input type="password" name="upwd"><br><br>
+    <input type="submit" value="登陆">
+    <input type="button" value="注册" onclick="window.location.href='vregister'">
+
+</form>
+</body>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script>
+    function getHead() {
+        console.log('用户名：' + $('#uname').val() + '获取头像');
+        $.ajax({
+            url: '../users/gethead?uname=' + $('#uname').val(),
+            success:function (data) {
+                $('#uhead').attr('src','../../uploads/'+data);
+            }
+        });
+    }
+</script>
+</html>

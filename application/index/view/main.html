@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>主页面</title>
+</head>
+<body>
+<!--
+oncontextmenu=”return false;” //禁止鼠标右键
+ondragstart=”return false;” //禁止鼠标拖动
+onselectstart=”return false;”//文字禁止鼠标选中
+onselect=”document.selection.empty();”//禁止复制文本
+-->
+<img src="../../uploads/{$Think.session.users.uhead|default='visitor.jpg'}" id="uhead"
+     style="width: 100px;height:100px;border-radius: 50px"/>
+<strong id="uname">欢迎你：{$Think.session.users.uname|default='游客'}</strong>
+</body>
+</html>

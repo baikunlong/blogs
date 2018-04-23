@@ -13,7 +13,9 @@ Route::get('think', function () {
     return 'hello,ThinkPHP5!';
 });
 
-Route::get('hello/:name', 'index/hello');
+//\think\facade\Route::alias('index','index/Index');
+\think\facade\Route::alias('users','index/Users');
+
 
 return [
 

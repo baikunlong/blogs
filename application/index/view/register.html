@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+</head>
+<body style="text-align: center">
+<img src="../../uploads/visitor.jpg" style="width: 100px;height:100px;border-radius: 50px" id="uheadimg"/>
+<form action="../users/register" method="post" enctype="multipart/form-data" id="uform">
+    用户名：<input type="text" name="uname"/><br><br>
+    密&nbsp;&nbsp;&nbsp;码：<input type="text" name="upwd"/><br><br>
+    头&nbsp;&nbsp;&nbsp;像：<input type="file" name="uhead" onchange="getImgURL(this)" id="uhead"/><br><br>
+    <!--<div>{:captcha_img()}</div><br><br>-->
+    <img src="../index/verify" id="verify_img" title="点击刷新验证码" alt="验证码"
+         onclick="refreshVerify()"/><br><br>
+    验证码：<input type="text" name="captcha"><br><br>
+    <input type="submit" value="注册">
+    <input type="button" value="登陆" onclick="window.location.href='vlogin'">
+</form>
+</body>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script>
+    function refreshVerify() {
+        var verify = document.getElementById('verify_img');
+        verify.src = "../index/verify";
+        console.log('刷新验证码');
+    }
+
+    function getImgURL(node) {
+        var imgURL = "";
+        try{
+            var file = null;
+            if(node.files && node.files[0] ){
+                file = node.files[0];
+            }else if(node.files && node.files.item(0)) {
+                file = node.files.item(0);
+            }
+            //Firefox 因安全性问题已无法直接通过input[file].value 获取完整的文件路径
+            try{
+                //Firefox7.0
+                imgURL =  file.getAsDataURL();
+                //alert("//Firefox7.0"+imgURL);
+            }catch(e){
+                //Firefox8.0以上
+                imgURL = window.URL.createObjectURL(file);
+                //alert("//Firefox8.0以上"+imgURL);
+            }
+        }catch(e){      //这里不知道怎么处理了，如果是遨游的话会报这个异常
+            //支持html5的浏览器,比如高版本的firefox、chrome、ie10
+            if (node.files && node.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    imgURL = e.target.result;
+                };
+                reader.readAsDataURL(node.files[0]);
+            }
+        }
+        //imgurl = imgURL;
+        creatImg(imgURL);
+        return imgURL;
+    }
+
+    function creatImg(imgURL){   //根据指定URL创建一个Img对象
+        $('#uheadimg').remove();
+        var textHtml = '<img src='+imgURL+ ' style="width: 100px;height:100px;border-radius: 50px" id="uheadimg" />';
+        $("#uform").before(textHtml);
+        alert(imgURL);
+    }
+</script>
+
+
+</html>
